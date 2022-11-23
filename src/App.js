@@ -5,6 +5,7 @@ import HomePage from "./pages/home";
 import LoginPage from "./pages/login";
 import MyCartPage from "./pages/myCart";
 import PageNotFound from "./pages/pageNotFound";
+import ProductPage from "./pages/product";
 import RegistrationPage from "./pages/registration";
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
 				<Route path="/" element={<HomePage />} />
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/registration" element={<RegistrationPage />} />
+				<Route path="/product" element={<ProductPage />} />
 				<Route path="/cart" element={<MyCartPage />} />
 				<Route path="/checkout" element={<CheckoutPage />} />
 			</Routes>

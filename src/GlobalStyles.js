@@ -51,6 +51,9 @@ const GlobalStyle = createGlobalStyle`
     * {
         box-sizing: border-box;
     }
+    :root {
+        --darkmode: gray;
+    }
 `
 
 export default GlobalStyle

@@ -9,7 +9,7 @@ export default function HomePage() {
 	return (
 		<Home>
 			<Header>
-				<h1> Market Name </h1>
+				<h1> Sunday Market </h1>
 				<Filters>
 					<h2> Filters </h2>
 					<h2> Filters </h2>
@@ -88,7 +88,7 @@ export default function HomePage() {
 const Home = styled.div`
 	width: 100%;
 	min-height: 100vh;
-	background-color: gray;
+	background-color: var(--darkmode);
 	cursor: default;
 `;
 const Header = styled.div`
@@ -105,6 +105,10 @@ const Header = styled.div`
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
 		rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 	background-color: lightgray;
+    h1 {
+        font-family: 'Patrick Hand', cursive;
+        font-size: 25px;
+    }
 `;
 const Filters = styled.div`
 	display: flex;
