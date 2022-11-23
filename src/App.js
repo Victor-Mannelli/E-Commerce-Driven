@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import GlobalStyle from "./GlobalStyles";
 import CheckoutPage from "./pages/checkout";
 import HomePage from "./pages/home";
@@ -8,19 +9,24 @@ import PageNotFound from "./pages/pageNotFound";
 import ProductPage from "./pages/product";
 import RegistrationPage from "./pages/registration";
 
+import UserContext from "./contexts/UserContext";
+
 export default function App() {
-	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path="*" element={<PageNotFound />} />
-				<Route path="/" element={<HomePage />} />
-				<Route path="/login" element={<LoginPage />} />
-				<Route path="/registration" element={<RegistrationPage />} />
-				<Route path="/product" element={<ProductPage />} />
-				<Route path="/cart" element={<MyCartPage />} />
-				<Route path="/checkout" element={<CheckoutPage />} />
-			</Routes>
-			<GlobalStyle/>
-		</BrowserRouter>
-	);
+  const [user, setUser] = useState(null);
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="*" element={<PageNotFound />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/registration" element={<RegistrationPage />} />
+          <Route path="/product" element={<ProductPage />} />
+          <Route path="/cart" element={<MyCartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+        </Routes>
+        <GlobalStyle />
+      </BrowserRouter>
+    </UserContext.Provider>
+  );
 }

@@ -19,7 +19,8 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         border: 0;
         font-size: 100%;
-    font: inherit;
+        text-decoration: none;
+        font: inherit;
         vertical-align: baseline;
     }
     /* HTML5 display-role reset for older browsers */
@@ -50,10 +51,11 @@ const GlobalStyle = createGlobalStyle`
     }
     * {
         box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
     }
     :root {
         --darkmode: gray;
     }
-`
+`;
 
-export default GlobalStyle
+export default GlobalStyle;
