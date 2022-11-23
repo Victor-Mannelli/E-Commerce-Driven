@@ -19,6 +19,7 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         border: 0;
         font-size: 100%;
+        text-decoration: none;
     font: inherit;
         vertical-align: baseline;
     }
