@@ -10,6 +10,7 @@ export default function ProductPage() {
 	const { id } = useParams();
 	const [counter, setCounter] = useState(0);
 	const [productsList, setProductsList] = useState([]);
+	const [price, setPrice] = useState(0);
 	const { user } = useContext(UserContext);
 
 	useEffect(() => {
@@ -31,6 +32,18 @@ export default function ProductPage() {
 			.then((e) => console.log(e))
 			.catch((e) => console.log(e));
 	}
+
+	function productPrice() {
+		const aux = currentProduct?.price.replace("$", "");
+		setPrice((aux * counter).toFixed(2));
+	}
+
+	useEffect(() => {
+		productPrice();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [counter]);
+
 	let currentProduct = productsList.find((e) => e._id === id);
 	return (
 		<InsideProduct>
@@ -53,7 +66,7 @@ export default function ProductPage() {
 				<PurchaseDiv>
 					<div style={{ cursor: "pointer" }} onClick={() => HandlePurchase}>
 						<p> Add to Cart </p>
-						<p> {currentProduct?.price} </p>
+						<p> {counter === 0 ? currentProduct?.price : `$${price}`} </p>
 					</div>
 					<div style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
 						<p> Cancel </p>
