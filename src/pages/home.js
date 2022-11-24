@@ -24,7 +24,7 @@ export default function HomePage() {
 			.catch((e) => console.log(e));
 	}, []);
 	return (
-		<Home>
+		<Page>
 			<Header>
 				<h1> Sunday Market </h1>
 				<Filters>
@@ -41,7 +41,7 @@ export default function HomePage() {
 			</Header>
 			<Main>
 				<SearchBar>
-					<input
+					<StyledInput
 						placeholder="Search for an Item"
 						onKeyDown={(e) => console.log(e)}
 					/>
@@ -126,15 +126,9 @@ export default function HomePage() {
 					</div>
 				</Products>
 			</Main>
-		</Home>
+		</Page>
 	);
 }
-const Home = styled.div`
-	width: 100%;
-	min-height: 100vh;
-	background-color: var(--darkmode);
-	cursor: default;
-`;
 const Header = styled.div`
 	position: fixed;
 	z-index: 2;
@@ -191,14 +185,6 @@ const SearchBar = styled.div`
 	margin: 0 auto;
 	width: 340px;
 	position: relative;
-	input {
-		width: 340px;
-		height: 40px;
-		border-radius: 5px;
-		border: none;
-		outline: none;
-		padding: 0 25px 0 10px;
-	}
 `;
 const SearchIcon = styled(HiOutlineMagnifyingGlass)`
 	position: absolute;

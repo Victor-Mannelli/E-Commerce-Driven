@@ -8,7 +8,7 @@ import MyCartPage from "./pages/myCart";
 import PageNotFound from "./pages/pageNotFound";
 import ProductPage from "./pages/productPage";
 import RegistrationPage from "./pages/registration";
-import UserContext from "./contexts/UserContext.js"
+import UserContext from "./contexts/UserContext";
 
 export default function App() {
   const [user, setUser] = useState(null);
