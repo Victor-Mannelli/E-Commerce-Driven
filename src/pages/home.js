@@ -1,11 +1,28 @@
-import styled from "styled-components";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
+import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import ibage from "../files/ibage.jpg";
+import { Page, StyledInput } from "../GeneralStyles";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+import axios from "axios";
+import Product from "../product.js";
 
 export default function HomePage() {
+	const [productsList, setProductsList] = useState([]);
 	const navigate = useNavigate();
+	const MeatsList = productsList.filter((e) => e.type === "meat");
+	const BevarageList = productsList.filter((e) => e.type === "beverage");
+	const DessertList = productsList.filter((e) => e.type === "dessert");
+	const GrainsList = productsList.filter((e) => e.type === "grains");
+
+	console.log(productsList);
+	useEffect(() => {
+		axios
+			.get("http://localhost:5000/products")
+			.then((e) => setProductsList(e.data))
+			.catch((e) => console.log(e));
+	}, []);
 	return (
 		<Home>
 			<Header>
@@ -17,14 +34,10 @@ export default function HomePage() {
 					<h2> Filters </h2>
 					<h2> Filters </h2>
 				</Filters>
-				<UserFeatures>
-					<div>
-						<AiOutlineShoppingCart />
-						<h2> Cart </h2>
-					</div>
-					<h2 onClick={() => navigate("/registration")}> Create Account</h2>
-					<h2 onClick={() => navigate("/login")}> Sign In </h2>
-				</UserFeatures>
+				<Icons>
+					<CartIcon onClick={() => navigate("/cart")} />
+					<UserIcon onClick={() => navigate("/login")} />
+				</Icons>
 			</Header>
 			<Main>
 				<SearchBar>
@@ -40,44 +53,75 @@ export default function HomePage() {
 							<h1> Meats </h1>
 						</Title>
 						<EspecificProducts>
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
+							{MeatsList.map((e) => {
+								return (
+									<Product
+										key={e._id}
+										name={e.name}
+										price={e.price}
+										type={e.type}
+										image={e.image}
+										productId={e._id}
+									/>
+								);
+							})}
 						</EspecificProducts>
 					</div>
 					<div>
-                        <Title>
-							<h1> Drinks </h1>
+						<Title>
+							<h1> Bevarages </h1>
 						</Title>
 						<EspecificProducts>
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
+							{BevarageList.map((e) => {
+								return (
+									<Product
+										key={e._id}
+										name={e.name}
+										price={e.price}
+										type={e.type}
+										image={e.image}
+										productId={e._id}
+									/>
+								);
+							})}
 						</EspecificProducts>
 					</div>
 					<div>
-                        <Title>
-							<h1> Bevarage </h1>
+						<Title>
+							<h1> Grains </h1>
 						</Title>
 						<EspecificProducts>
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
-							<img src={ibage} alt="imag" />
+							{GrainsList.map((e) => {
+								return (
+									<Product
+										key={e._id}
+										name={e.name}
+										price={e.price}
+										type={e.type}
+										image={e.image}
+										productId={e._id}
+									/>
+								);
+							})}
+						</EspecificProducts>
+					</div>
+					<div>
+						<Title>
+							<h1> Desserts </h1>
+						</Title>
+						<EspecificProducts>
+							{DessertList.map((e) => {
+								return (
+									<Product
+										key={e._id}
+										name={e.name}
+										price={e.price}
+										type={e.type}
+										image={e.image}
+										productId={e._id}
+									/>
+								);
+							})}
 						</EspecificProducts>
 					</div>
 				</Products>
@@ -97,18 +141,28 @@ const Header = styled.div`
 	top: 0;
 	left: 0;
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
 	height: 70px;
 	width: 100%;
 	padding: 0 25px;
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
 		rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-	background-color: lightgray;
-    h1 {
-        font-family: 'Patrick Hand', cursive;
-        font-size: 25px;
-    }
+	background-color: var(--darkmodeHeader);
+	color: var(--darkmodeText);
+	font-family: "Roboto", sans-serif;
+	h1 {
+		position: absolute;
+		left: 25px;
+		top: 20px;
+		font-family: "Patrick Hand", cursive;
+		font-size: 27px;
+	}
+`;
+const Icons = styled.div`
+	position: absolute;
+	right: 25px;
+	top: 20px;
 `;
 const Filters = styled.div`
 	display: flex;
@@ -118,17 +172,16 @@ const Filters = styled.div`
 		cursor: pointer;
 	}
 `;
-const UserFeatures = styled.div`
-	display: flex;
-	gap: 15px;
-	div {
-		display: flex;
-		gap: 5px;
-		cursor: pointer;
-	}
-	h2 {
-		cursor: pointer;
-	}
+const UserIcon = styled(FaUserCircle)`
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+`;
+const CartIcon = styled(AiOutlineShoppingCart)`
+	width: 30px;
+	height: 30px;
+	margin-right: 20px;
+	cursor: pointer;
 `;
 const Main = styled.div`
 	padding-top: 70px;
@@ -149,13 +202,15 @@ const SearchBar = styled.div`
 `;
 const SearchIcon = styled(HiOutlineMagnifyingGlass)`
 	position: absolute;
-	top: 32px;
-	right: 5px;
+	top: 28px;
+	right: 7px;
+	width: 25px;
+	height: 25px;
 `;
 const Products = styled.div`
 	display: grid;
 	grid-template-rows: auto auto auto;
-    padding-bottom: 25px;
+	padding-bottom: 25px;
 	img {
 		height: 150px;
 		width: 250px;
@@ -164,11 +219,13 @@ const Products = styled.div`
 const EspecificProducts = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 250px);
-    grid-gap: 10px;
-    justify-content: center;
+	grid-gap: 10px;
+	justify-content: center;
 `;
 const Title = styled.div`
-    display: flex;
-    justify-content: center;
-    padding: 15px;
-`
+	display: flex;
+	justify-content: center;
+	padding: 15px;
+	color: var(--darkmodeText);
+	font-family: "Roboto", sans-serif;
+`;
