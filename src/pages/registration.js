@@ -2,10 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import LogInSignUpStyle from "../assets/styles/LogInSignUpStyle";
-import Button from "../assets/styles/Button";
-import Input from "../assets/styles/Input";
-import { BASE_URL } from "../assets/constants/urls";
+import { StyledButton, StyledRegistrationInput, StyledRegistrationPage } from "../GeneralStyles";
+import { BASE_URL } from "../constants/urls";
 
 export default function RegistrationPage() {
     const [name, setName] = useState("");
@@ -33,42 +31,42 @@ export default function RegistrationPage() {
     }
   
     return (
-      <LogInSignUpStyle>
-        <span>Sunday Market</span>
+      <StyledRegistrationPage>
+        <span onClick={() => navigate("/")}>Sunday Market</span>
         <form>
-          <Input
+          <StyledRegistrationInput
             type="text"
             value={name}
             placeholder="Name"
             onChange={(e) => setName(e.target.value)}
           />
   
-          <Input
+          <StyledRegistrationInput
             type="email"
             value={email}
             placeholder="E-mail"
             onChange={(e) => setEmail(e.target.value)}
           />
   
-          <Input
+          <StyledRegistrationInput
             type="password"
             value={password}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
   
-          <Input
+          <StyledRegistrationInput
             type="password"
             value={passwordConfirmation}
             placeholder="Password confirmation"
             onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
   
-          <Button type="submit" onClick={handleSubmit}>
+          <StyledButton type="submit" onClick={handleSubmit}>
             Sign up
-          </Button>
+          </StyledButton>
         </form>
         <Link to="/login">Already have an account? Log in!</Link>
-      </LogInSignUpStyle>
+      </StyledRegistrationPage>
     );
   }
