@@ -3,16 +3,13 @@ import styled from "styled-components";
 import axios from "axios";
 import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
 import { PageDefaultStyle, StyledInput } from "../GeneralStyles";
-import Product from "../product.js";
+import Product from "../Product.js";
 import Header from "../components/Header";
+import loading from "../assets/loading.gif";
 
 export default function HomePage() {
 	const [productsList, setProductsList] = useState([]);
 	const [filter, setFilter] = useState("");
-	const MeatsList = productsList.filter((e) => e.type === "meat");
-	const BevarageList = productsList.filter((e) => e.type === "beverage");
-	const DessertList = productsList.filter((e) => e.type === "dessert");
-	const GrainsList = productsList.filter((e) => e.type === "grains");
 
 	useEffect(() => {
 		axios
@@ -20,8 +17,12 @@ export default function HomePage() {
 			.then((e) => setProductsList(e.data))
 			.catch((e) => console.log(e));
 	}, []);
-
-	return (
+	return productsList.length === 0 ? (
+		<LoadingPage>
+			<Header />
+			<img src={loading} alt="loading" />
+		</LoadingPage>
+	) : (
 		<PageDefaultStyle>
 			<Header />
 			<SearchBar>
@@ -38,19 +39,21 @@ export default function HomePage() {
 							<h1> Are you looking for </h1>
 						</Title>
 						<EspecificProducts>
-						{productsList.filter(e => e.name.toLowerCase().includes(filter) === true).map((e) => {
-							return (
-								<Product
-									key={e._id}
-									name={e.name}
-									price={e.price}
-									type={e.type}
-									image={e.image}
-									productId={e._id}
-								/>
-							);
-						})}
-					</EspecificProducts>
+							{productsList?.allproducts
+								?.filter((e) => e.name.toLowerCase().includes(filter) === true)
+								.map((e) => {
+									return (
+										<Product
+											key={e._id}
+											name={e.name}
+											price={e.price}
+											image={e.image}
+											quantity={e.stock}
+											productId={e._id}
+										/>
+									);
+								})}
+						</EspecificProducts>
 					</div>
 				)}
 				<div>
@@ -58,13 +61,13 @@ export default function HomePage() {
 						<h1> Meats </h1>
 					</Title>
 					<EspecificProducts>
-						{MeatsList.map((e) => {
+						{productsList?.meat.map((e) => {
 							return (
 								<Product
 									key={e._id}
 									name={e.name}
 									price={e.price}
-									type={e.type}
+									quantity={e.stock}
 									image={e.image}
 									productId={e._id}
 								/>
@@ -74,16 +77,16 @@ export default function HomePage() {
 				</div>
 				<div>
 					<Title>
-						<h1> Bevarages </h1>
+						<h1> Beverages </h1>
 					</Title>
 					<EspecificProducts>
-						{BevarageList.map((e) => {
+						{productsList?.beverage.map((e) => {
 							return (
 								<Product
 									key={e._id}
 									name={e.name}
 									price={e.price}
-									type={e.type}
+									quantity={e.stock}
 									image={e.image}
 									productId={e._id}
 								/>
@@ -96,13 +99,13 @@ export default function HomePage() {
 						<h1> Grains </h1>
 					</Title>
 					<EspecificProducts>
-						{GrainsList.map((e) => {
+						{productsList?.grains.map((e) => {
 							return (
 								<Product
 									key={e._id}
 									name={e.name}
 									price={e.price}
-									type={e.type}
+									quantity={e.stock}
 									image={e.image}
 									productId={e._id}
 								/>
@@ -115,13 +118,13 @@ export default function HomePage() {
 						<h1> Desserts </h1>
 					</Title>
 					<EspecificProducts>
-						{DessertList.map((e) => {
+						{productsList?.dessert.map((e) => {
 							return (
 								<Product
 									key={e._id}
 									name={e.name}
 									price={e.price}
-									type={e.type}
+									quantity={e.stock}
 									image={e.image}
 									productId={e._id}
 								/>
@@ -150,10 +153,6 @@ const Products = styled.div`
 	display: grid;
 	grid-template-rows: auto auto auto;
 	padding-bottom: 25px;
-	img {
-		height: 150px;
-		width: 250px;
-	}
 `;
 const EspecificProducts = styled.div`
 	display: grid;
@@ -168,4 +167,18 @@ const Title = styled.div`
 	color: var(--darkmodeText);
 	font-family: "Roboto", sans-serif;
 	font-size: 20px;
+`;
+const LoadingPage = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-top: 70px;
+	width: 100%;
+	min-height: 100vh;
+	background-color: var(--darkmode);
+	cursor: default;
+	img {
+		width: 150px;
+		height: 150px;
+	}
 `;

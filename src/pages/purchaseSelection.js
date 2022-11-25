@@ -5,7 +5,7 @@ import styled from "styled-components";
 import axios from "axios";
 import UserContext from "../contexts/UserContext";
 
-export default function ProductPage() {
+export default function PurchaseSelection() {
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const [counter, setCounter] = useState(0);

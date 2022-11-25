@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import Product from "../product.js";
+import Product from "../Product.js";
 import { PageDefaultStyle } from "../GeneralStyles";
 import Header from "../components/Header.js";
 
@@ -10,9 +10,7 @@ export default function FiltersPage() {
 	const [productsList, setProductsList] = useState([]);
 	const { type } = useParams();
 	const filteredList = productsList.filter((e) => e.type === type);
-    console.log(type)
-    console.log(filteredList)
-    console.log(productsList)
+
 	useEffect(() => {
 		axios
 			.get("http://localhost:5000/products")
