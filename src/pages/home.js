@@ -8,29 +8,51 @@ import Header from "../components/Header";
 
 export default function HomePage() {
 	const [productsList, setProductsList] = useState([]);
+	const [filter, setFilter] = useState("");
 	const MeatsList = productsList.filter((e) => e.type === "meat");
 	const BevarageList = productsList.filter((e) => e.type === "beverage");
 	const DessertList = productsList.filter((e) => e.type === "dessert");
 	const GrainsList = productsList.filter((e) => e.type === "grains");
 
-	console.log(productsList);
 	useEffect(() => {
 		axios
 			.get("http://localhost:5000/products")
 			.then((e) => setProductsList(e.data))
 			.catch((e) => console.log(e));
 	}, []);
+
 	return (
 		<PageDefaultStyle>
 			<Header />
 			<SearchBar>
 				<StyledInput
 					placeholder="Search for an Item"
-					onKeyDown={(e) => console.log(e)}
+					onChange={(e) => setFilter(e.target.value)}
 				/>
 				<SearchIcon />
 			</SearchBar>
 			<Products>
+				{filter !== "" && (
+					<div>
+						<Title>
+							<h1> Are you looking for </h1>
+						</Title>
+						<EspecificProducts>
+						{productsList.filter(e => e.name.toLowerCase().includes(filter) === true).map((e) => {
+							return (
+								<Product
+									key={e._id}
+									name={e.name}
+									price={e.price}
+									type={e.type}
+									image={e.image}
+									productId={e._id}
+								/>
+							);
+						})}
+					</EspecificProducts>
+					</div>
+				)}
 				<div>
 					<Title>
 						<h1> Meats </h1>
@@ -145,5 +167,5 @@ const Title = styled.div`
 	padding: 35px 0;
 	color: var(--darkmodeText);
 	font-family: "Roboto", sans-serif;
-  font-size: 20px;
+	font-size: 20px;
 `;
