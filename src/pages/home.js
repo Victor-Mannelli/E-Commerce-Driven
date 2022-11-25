@@ -3,11 +3,12 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import ibage from "../files/ibage.jpg";
+import { Page, StyledInput } from "../GeneralStyles";
 
 export default function HomePage() {
 	const navigate = useNavigate();
 	return (
-		<Home>
+		<Page>
 			<Header>
 				<h1> Sunday Market </h1>
 				<Filters>
@@ -28,7 +29,7 @@ export default function HomePage() {
 			</Header>
 			<Main>
 				<SearchBar>
-					<input
+					<StyledInput
 						placeholder="Search for an Item"
 						onKeyDown={(e) => console.log(e)}
 					/>
@@ -82,15 +83,9 @@ export default function HomePage() {
 					</div>
 				</Products>
 			</Main>
-		</Home>
+		</Page>
 	);
 }
-const Home = styled.div`
-	width: 100%;
-	min-height: 100vh;
-	background-color: var(--darkmode);
-	cursor: default;
-`;
 const Header = styled.div`
 	position: fixed;
 	z-index: 2;
@@ -104,10 +99,12 @@ const Header = styled.div`
 	padding: 0 25px;
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
 		rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-	background-color: lightgray;
+	background-color: var(--darkmodeHeader);
+    color: var(--darkmodeText);
+    font-family: 'Roboto', sans-serif;
     h1 {
         font-family: 'Patrick Hand', cursive;
-        font-size: 25px;
+        font-size: 27px;
     }
 `;
 const Filters = styled.div`
@@ -138,19 +135,13 @@ const SearchBar = styled.div`
 	margin: 0 auto;
 	width: 340px;
 	position: relative;
-	input {
-		width: 340px;
-		height: 40px;
-		border-radius: 5px;
-		border: none;
-		outline: none;
-		padding: 0 25px 0 10px;
-	}
 `;
 const SearchIcon = styled(HiOutlineMagnifyingGlass)`
 	position: absolute;
-	top: 32px;
-	right: 5px;
+	top: 28px;
+	right: 7px;
+    width: 25px;
+    height: 25px;
 `;
 const Products = styled.div`
 	display: grid;
@@ -171,4 +162,6 @@ const Title = styled.div`
     display: flex;
     justify-content: center;
     padding: 15px;
+    color: var(--darkmodeText);
+    font-family: 'Roboto', sans-serif;
 `

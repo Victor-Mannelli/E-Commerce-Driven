@@ -19,7 +19,6 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         border: 0;
         font-size: 100%;
-        text-decoration: none;
         font: inherit;
         vertical-align: baseline;
     }
@@ -49,12 +48,18 @@ const GlobalStyle = createGlobalStyle`
     button {
         cursor: pointer;
     }
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
     * {
         box-sizing: border-box;
         font-family: 'Roboto', sans-serif;
     }
     :root {
-        --darkmode: gray;
+        --darkmodeHeader: #313537;
+        --darkmodeText: #ffffff;
+        --darkmode: #60686c;
     }
 `;
 
