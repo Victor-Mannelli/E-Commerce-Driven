@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import Product from "../product.js";
+import Header from "../components/Header";
 
 export default function HomePage() {
 	const [productsList, setProductsList] = useState([]);
@@ -25,20 +26,7 @@ export default function HomePage() {
 	}, []);
 	return (
 		<Page>
-			<Header>
-				<h1> Sunday Market </h1>
-				<Filters>
-					<h2> Filters </h2>
-					<h2> Filters </h2>
-					<h2> Filters </h2>
-					<h2> Filters </h2>
-					<h2> Filters </h2>
-				</Filters>
-				<Icons>
-					<CartIcon onClick={() => navigate("/cart")} />
-					<UserIcon onClick={() => navigate("/login")} />
-				</Icons>
-			</Header>
+			<Header />
 			<Main>
 				<SearchBar>
 					<StyledInput
@@ -129,35 +117,6 @@ export default function HomePage() {
 		</Page>
 	);
 }
-const Header = styled.div`
-	position: fixed;
-	z-index: 2;
-	top: 0;
-	left: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 70px;
-	width: 100%;
-	padding: 0 25px;
-	box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-		rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-	background-color: var(--darkmodeHeader);
-	color: var(--darkmodeText);
-	font-family: "Roboto", sans-serif;
-	h1 {
-		position: absolute;
-		left: 25px;
-		top: 20px;
-		font-family: "Patrick Hand", cursive;
-		font-size: 27px;
-	}
-`;
-const Icons = styled.div`
-	position: absolute;
-	right: 25px;
-	top: 20px;
-`;
 const Filters = styled.div`
 	display: flex;
 	justify-content: space-around;
@@ -166,25 +125,14 @@ const Filters = styled.div`
 		cursor: pointer;
 	}
 `;
-const UserIcon = styled(FaUserCircle)`
-	width: 30px;
-	height: 30px;
-	cursor: pointer;
-`;
-const CartIcon = styled(AiOutlineShoppingCart)`
-	width: 30px;
-	height: 30px;
-	margin-right: 20px;
-	cursor: pointer;
-`;
 const Main = styled.div`
-	padding-top: 70px;
+  padding-top: 70px;
 `;
 const SearchBar = styled.div`
-	padding: 20px 0;
-	margin: 0 auto;
-	width: 340px;
-	position: relative;
+  padding: 20px 0;
+  margin: 0 auto;
+  width: 340px;
+  position: relative;
 `;
 const SearchIcon = styled(HiOutlineMagnifyingGlass)`
 	position: absolute;

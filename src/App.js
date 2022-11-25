@@ -9,12 +9,15 @@ import PageNotFound from "./pages/pageNotFound";
 import ProductPage from "./pages/productPage";
 import RegistrationPage from "./pages/registration";
 import UserContext from "./contexts/UserContext";
+import CartContext from "./contexts/CartContext";
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [cart, setCart] = useState([]);
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <BrowserRouter>
+      <CartContext.Provider value={{ cart, setCart }}>
+        <BrowserRouter>
         <Routes>
           <Route path="*" element={<PageNotFound />} />
           <Route path="/" element={<HomePage />} />
@@ -26,6 +29,7 @@ export default function App() {
         </Routes>
         <GlobalStyle />
       </BrowserRouter>
+      </CartContext.Provider>
     </UserContext.Provider>
   );
 }

@@ -9,13 +9,14 @@ justify-content: center;
 height: 100vh;
 gap: 30px;
 span {
-    font-size: 32px;
+    font-size: 48px;
     font-family: 'Patrick Hand', cursive;
 }
 a {
   color: white;
   font-size: 14px;
   font-weight: 700;
+    font-family: 'Roboto', sans-serif;
   &:visited {
     filter: brightness(0.6);
   }
