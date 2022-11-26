@@ -14,7 +14,7 @@ export default function FiltersPage() {
 	useEffect(() => {
 		axios
 			.get("http://localhost:5000/products")
-			.then((e) => setProductsList(e.data))
+			.then((e) => setProductsList(e.data.allproducts))
 			.catch((e) => console.log(e));
 	}, []);
 	return (

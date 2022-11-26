@@ -1,12 +1,68 @@
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../components/Header";
+import CartContext from "../contexts/CartContext";
+import UserContext from "../contexts/UserContext";
 import { PageDefaultStyle, StyledButton } from "../GeneralStyles";
 
 export default function MyCartPage() {
+  const { user } = useContext(UserContext);
+  const { cart, setCart } = useContext(CartContext);
+  const navigate = useNavigate();
+  console.log(user);
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    } else {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      axios
+        .get("http://localhost:5000/cart", config)
+        .then((e) => setCart(e.data.products))
+        .catch((e) => console.log(e));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+
+  }, [user]);
+
+  function listProductsInCart({ product }) {
+    return (
+      <div className="product-container">
+        <img src={product.productImage} alt="product in cart" />
+        <div className="info">
+          <h2>{product.productName}</h2>
+          <span>{`Quantity: ${product.quantity}`}</span>
+          <span>{product.productPrice}</span>
+        </div>
+        <div className="buttons">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+    );
+  }
+
+  // useEffect(() => {
+  //   axios
+  //     .delete("http://localhost:5000/cart")
+  //     .then((e) => setCart(cart.filter(cart.productName != name) ))
+  //     .catch((e) => console.log(e));
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
   return (
     <PageDefaultStyle>
       <Header />
+      <StyledProductsInCart>
+        <h1>My Cart</h1>
+        {/* {cart.map(product => listProductsInCart(product))} */}
+      </StyledProductsInCart>
       <StyledCartSummary>
         <h1>Order summary</h1>
         <div>
@@ -28,53 +84,6 @@ export default function MyCartPage() {
         <StyledButton>Checkout now</StyledButton>
         <Link to="/">Back to shopping</Link>
       </StyledCartSummary>
-      <StyledProductsInCart>
-        <h1>My Cart</h1>
-        <div className="product-container">
-          <img src="#" alt="product in cart" />
-          <div className="info">
-            <h2>Name</h2>
-            <span>Description</span>
-          </div>
-          <div className="buttons">
-            <button>Edit</button>
-            <button>Remove</button>
-          </div>
-        </div>
-        <div className="product-container">
-          <img src="#" alt="product in cart" />
-          <div className="info">
-            <h2>Name</h2>
-            <span>Description</span>
-          </div>
-          <div className="buttons">
-            <button>Edit</button>
-            <button>Remove</button>
-          </div>
-        </div>
-        <div className="product-container">
-          <img src="#" alt="product in cart" />
-          <div className="info">
-            <h2>Name</h2>
-            <span>Description</span>
-          </div>
-          <div className="buttons">
-            <button>Edit</button>
-            <button>Remove</button>
-          </div>
-        </div>
-        <div className="product-container">
-          <img src="#" alt="product in cart" />
-          <div className="info">
-            <h2>Name</h2>
-            <span>Description</span>
-          </div>
-          <div className="buttons">
-            <button>Edit</button>
-            <button>Remove</button>
-          </div>
-        </div>
-      </StyledProductsInCart>
     </PageDefaultStyle>
   );
 }

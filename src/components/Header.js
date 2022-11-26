@@ -24,10 +24,10 @@ export default function Header() {
 				/>
 				<div onClick={() => navigate("/cart")} className="user-features-icons">
 					<AiOutlineShoppingCart />
-					<span>
-						{`(${
+					<span>0
+						{/* {`(${
 							(cart.lenght === undefined) | (cart === []) ? 0 : cart.lenght
-						})`}
+						})`} */}
 					</span>
 				</div>
 			</UserFeatures>

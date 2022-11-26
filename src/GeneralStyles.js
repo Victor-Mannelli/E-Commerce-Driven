@@ -28,15 +28,16 @@ export const StyledRegistrationPage = styled.div`
   span {
     font-size: 48px;
     font-family: "Patrick Hand", cursive;
+    cursor: pointer;
   }
   a {
     color: white;
     font-size: 14px;
     font-weight: 700;
     font-family: "Roboto", sans-serif;
-    &:visited {
-      filter: brightness(0.6);
-    }
+  }
+  .back {
+    font-size: 12px;
   }
 `;
 export const StyledRegistrationInput = styled.input`
@@ -59,7 +60,7 @@ export const StyledButton = styled.button`
   width: 100%;
   height: 46px;
   margin-top: 10px;
-  background: #262A2B;
+  background: #262a2b;
   border-radius: 5px;
   border: none;
   color: white;
