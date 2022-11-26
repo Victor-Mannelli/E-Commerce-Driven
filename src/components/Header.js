@@ -58,6 +58,9 @@ const HeaderStyle = styled.div`
 		font-size: 27px;
 		cursor: pointer;
 	}
+	@media (max-width: 993px){
+		display: none;
+	}
 `;
 const Filters = styled.div`
 	display: flex;

@@ -13,15 +13,15 @@ export default function PurchaseSelection() {
   const [price, setPrice] = useState(0);
   const { user } = useContext(UserContext);
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/products")
-      .then((e) => setProductsList(e.data.allproducts))
-      .catch((e) => console.log(e));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  function HandlePurchase() {
+	useEffect(() => {
+		axios
+			.get("http://localhost:5000/products")
+			.then((e) => setProductsList(e.data.allproducts))
+			.catch((e) => console.log(e));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+	console.log(productsList)
+	function HandlePurchase() {
     const config = {
       headers: {
         Authorization: `Bearer ${user.token}`,
