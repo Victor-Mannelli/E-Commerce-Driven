@@ -11,6 +11,7 @@ import RegistrationPage from "./pages/registration";
 import UserContext from "./contexts/UserContext";
 import CartContext from "./contexts/CartContext";
 import FiltersPage from "./pages/filtersPage";
+import MobileNavigation from "./pages/mobileNavigation";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/product/:id" element={<PurchaseSelection />} />
+          <Route path="/mobile" element={<MobileNavigation />} />
           <Route path="/categories/:type" element={<FiltersPage/>} />
           <Route path="/cart" element={<MyCartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
