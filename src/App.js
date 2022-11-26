@@ -6,10 +6,11 @@ import HomePage from "./pages/home";
 import LoginPage from "./pages/login";
 import MyCartPage from "./pages/myCart";
 import PageNotFound from "./pages/pageNotFound";
-import ProductPage from "./pages/productPage";
+import PurchaseSelection from "./pages/purchaseSelection";
 import RegistrationPage from "./pages/registration";
 import UserContext from "./contexts/UserContext";
 import CartContext from "./contexts/CartContext";
+import FiltersPage from "./pages/filtersPage";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -23,7 +24,8 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/registration" element={<RegistrationPage />} />
-          <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/product/:id" element={<PurchaseSelection />} />
+          <Route path="/categories/:type" element={<FiltersPage/>} />
           <Route path="/cart" element={<MyCartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>

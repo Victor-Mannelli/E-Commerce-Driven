@@ -5,7 +5,7 @@ import styled from "styled-components";
 import axios from "axios";
 import UserContext from "../contexts/UserContext";
 
-export default function ProductPage() {
+export default function PurchaseSelection() {
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const [counter, setCounter] = useState(0);
@@ -33,14 +33,9 @@ export default function ProductPage() {
 			.catch((e) => console.log(e));
 	}
 
-	function productPrice() {
-		const aux = currentProduct?.price.replace("$", "");
-		setPrice((aux * counter).toFixed(2));
-	}
-
 	useEffect(() => {
-		productPrice();
-
+		const aux = currentProduct?.price.replace("$", "").replace("/kg","");
+		setPrice((aux * counter).toFixed(2));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [counter]);
 
