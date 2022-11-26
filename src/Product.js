@@ -58,7 +58,7 @@ const ProductDescription = styled.div`
 		background-color: var(--darkmode);
 		border-radius: 5px;
 		gap: 10px;
-		cursor: pointer;
+		cursor: ${(props) => props.quantity > 0 ? "pointer" : "default"};
 		:hover {
 			background-color: ${(props) => props.quantity > 0 && "gray"};
 		}
