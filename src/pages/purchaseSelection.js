@@ -16,11 +16,11 @@ export default function PurchaseSelection() {
 	useEffect(() => {
 		axios
 			.get("http://localhost:5000/products")
-			.then((e) => setProductsList(e.data))
+			.then((e) => setProductsList(e.data.allproducts))
 			.catch((e) => console.log(e));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
+	console.log(productsList)
 	function HandlePurchase() {
 		const purchase = {
 			product: currentProduct?.name,
