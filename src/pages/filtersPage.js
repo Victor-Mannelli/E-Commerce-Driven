@@ -14,9 +14,10 @@ export default function FiltersPage() {
 	useEffect(() => {
 		axios
 			.get("http://localhost:5000/products")
-			.then((e) => setProductsList(e.data))
+			.then((e) => setProductsList(e.data.allproducts))
 			.catch((e) => console.log(e));
 	}, []);
+
 	return (
 		<PageDefaultStyle>
             <Header/>
@@ -29,10 +30,10 @@ export default function FiltersPage() {
 									key={e._id}
 									name={e.name}
 									price={e.price}
-									type={e.type}
+									quantity={e.stock}
 									image={e.image}
 									productId={e._id}
-								/>
+								/> 
 							);
 						})}
 					</EspecificProducts>
@@ -44,11 +45,7 @@ export default function FiltersPage() {
 const Products = styled.div`
 	display: grid;
 	grid-template-rows: auto auto auto;
-	padding: 30px 0;
-	img {
-		height: 150px;
-		width: 250px;
-	}
+	padding: 25px 0;
 `;
 const EspecificProducts = styled.div`
 	display: grid;
