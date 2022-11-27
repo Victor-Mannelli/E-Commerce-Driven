@@ -21,22 +21,24 @@ export default function App() {
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <CartContext.Provider value={{ cart, setCart }}>
-      <CartStatusContext.Provider value={{ numberOfProducts, setNumberOfProducts }}>
-        <BrowserRouter>
-        <Routes>
-          <Route path="*" element={<PageNotFound />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/registration" element={<RegistrationPage />} />
-          <Route path="/product/:id" element={<PurchaseSelection />} />
-          <Route path="/mobile" element={<MobileNavigation />} />
-          <Route path="/categories/:type" element={<FiltersPage/>} />
-          <Route path="/cart" element={<MyCartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-        </Routes>
-        <GlobalStyle />
-      </BrowserRouter>
-      </CartStatusContext.Provider>
+        <CartStatusContext.Provider
+          value={{ numberOfProducts, setNumberOfProducts }}
+        >
+          <BrowserRouter>
+            <Routes>
+              <Route path="*" element={<PageNotFound />} />
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/registration" element={<RegistrationPage />} />
+              <Route path="/product/:id" element={<PurchaseSelection />} />
+              <Route path="/mobile" element={<MobileNavigation />} />
+              <Route path="/categories/:type" element={<FiltersPage />} />
+              <Route path="/cart" element={<MyCartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+            </Routes>
+            <GlobalStyle />
+          </BrowserRouter>
+        </CartStatusContext.Provider>
       </CartContext.Provider>
     </UserContext.Provider>
   );

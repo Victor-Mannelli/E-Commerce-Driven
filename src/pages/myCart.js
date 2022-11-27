@@ -15,7 +15,6 @@ export default function MyCartPage() {
   const { cart, setCart } = useContext(CartContext);
   const { setNumberOfProducts} = useContext(CartStatusContext)
   const navigate = useNavigate();
-  console.log(user);
 
   useEffect(() => {
     if (!user) {
@@ -30,7 +29,6 @@ export default function MyCartPage() {
         .get("http://localhost:5000/cart", config)
         .then((res) => {
           const newCart = [...res.data];
-          console.log(newCart)
           setCart(newCart);
           setNumberOfProducts(newCart.lenght)
         })
@@ -40,7 +38,6 @@ export default function MyCartPage() {
   }, [user]);
 
   function deleteProduct(productId) {
-    console.log(productId);
     const config = {
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -91,7 +88,7 @@ export default function MyCartPage() {
           <h3>Your cart is empty.</h3>
         )}
       </StyledProductsInCart>
-      <CartSummary/>
+      <CartSummary goTo="Checkout" backTo="shopping" />
     </PageDefaultStyle>
   );
 }

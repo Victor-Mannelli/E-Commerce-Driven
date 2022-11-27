@@ -1,56 +1,63 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import CartContext from "../contexts/CartContext";
 import { StyledButton } from "../GeneralStyles";
 
-export default function CartSummary(){
-    const { cart } = useContext(CartContext);
-    const navigate = useNavigate();
-    
-    function subtotal() {
-      let subt = 0;
-      if (cart) {
-        cart?.forEach((product) => {
-          subt +=
-            parseFloat(product.productPrice.replace("$", "").replace("/kg", "")) *
-            parseInt(product.quantity);
-        });
-      }
-      return "$"+subt.toFixed(2);
+export default function CartSummary({ goTo, backTo, sendPayment }) {
+  const { cart } = useContext(CartContext);
+  const navigate = useNavigate();
+  const [subtotal, setSubtotal] = useState(0);
+  const [discounts, setDiscounts] = useState(0); // TBD, no discounts for now
+  const [freight, setFreight] = useState(0); // TBD, no freight for now
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    let subt = 0;
+    cart?.forEach((product) => {
+      subt +=
+        parseFloat(product.productPrice.replace("$", "").replace("/kg", "")) *
+        parseInt(product.quantity);
+    });
+    setSubtotal(subt);
+    setTotal(subt + discounts + freight);
+  }, [cart]);
+
+  function handleCheckoutAndPayment() {
+    if (goTo === "Checkout") {
+      navigate("/checkout");
+    } else if (goTo === "Order") {
+      sendPayment(total);
+    } else {
+      navigate("/cart");
     }
-    function discounts() { // TBD, no discounts for now
-      return "$0.00";
-    }
-    function freight() { // TBD, no freight for now
-      return "$0.00";
-    }
-    function total() {
-      return "$"+parseFloat(subtotal().replace("$", "")+discounts().replace("$", "")+freight().replace("$", "")).toFixed(2);
-    }
-    return (
-        <StyledCartSummary>
-        <h1>Order summary</h1>
-        <div>
-          <span>Subtotal</span>
-          <span>{subtotal()}</span>
-        </div>
-        <div>
-          <span>(-) Discounts</span>
-          <span>{discounts()}</span>
-        </div>
-        <div>
-          <span>(+) Freight</span>
-          <span>{freight()}</span>
-        </div>
-        <div>
-          <span>Total</span>
-          <span>{total()}</span>
-        </div>
-        <StyledButton onClick={() => navigate("/checkout")}>Checkout now</StyledButton>
-        <Link to="/">Back to shopping</Link>
-      </StyledCartSummary>
-    )
+  }
+
+  return (
+    <StyledCartSummary>
+      <h1>Order summary</h1>
+      <div>
+        <span>Subtotal</span>
+        <span>{"$" + subtotal.toFixed(2)}</span>
+      </div>
+      <div>
+        <span>(-) Discounts</span>
+        <span>{"$" + discounts.toFixed(2)}</span>
+      </div>
+      <div>
+        <span>(+) Freight</span>
+        <span>{"$" + freight.toFixed(2)}</span>
+      </div>
+      <div>
+        <span>Total</span>
+        <span>{"$" + total.toFixed(2)}</span>
+      </div>
+      <StyledButton
+        onClick={() => handleCheckoutAndPayment()}
+      >{`${goTo} now`}</StyledButton>
+      <Link to={backTo==="cart" ? "/cart" : "/"}>{`Back to ${backTo}`}</Link>
+    </StyledCartSummary>
+  );
 }
 
 const StyledCartSummary = styled.div`
