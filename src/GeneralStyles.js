@@ -51,6 +51,9 @@ export const StyledRegistrationPage = styled.div`
 			filter: brightness(0.6);
 		}
 	}
+  .back {
+    font-size: 12px;
+  }
 `;
 export const StyledRegistrationInput = styled.input`
 	background: white;

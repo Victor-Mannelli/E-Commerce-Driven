@@ -67,6 +67,7 @@ export default function RegistrationPage() {
           </StyledButton>
         </form>
         <Link to="/login">Already have an account? Log in!</Link>
+        <Link to="/" className="back">Or go back and keep looking for items</Link>
       </StyledRegistrationPage>
     );
   }
