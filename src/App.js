@@ -10,15 +10,18 @@ import PurchaseSelection from "./pages/purchaseSelection";
 import RegistrationPage from "./pages/registration";
 import UserContext from "./contexts/UserContext";
 import CartContext from "./contexts/CartContext";
+import CartStatusContext from "./contexts/CartStatusContext";
 import FiltersPage from "./pages/filtersPage";
 import MobileNavigation from "./pages/mobileNavigation";
 
 export default function App() {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
+  const [numberOfProducts, setNumberOfProducts] = useState(0);
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <CartContext.Provider value={{ cart, setCart }}>
+      <CartStatusContext.Provider value={{ numberOfProducts, setNumberOfProducts }}>
         <BrowserRouter>
         <Routes>
           <Route path="*" element={<PageNotFound />} />
@@ -33,6 +36,7 @@ export default function App() {
         </Routes>
         <GlobalStyle />
       </BrowserRouter>
+      </CartStatusContext.Provider>
       </CartContext.Provider>
     </UserContext.Provider>
   );

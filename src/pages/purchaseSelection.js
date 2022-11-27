@@ -13,15 +13,18 @@ export default function PurchaseSelection() {
   const [price, setPrice] = useState(0);
   const { user } = useContext(UserContext);
 
-	useEffect(() => {
-		axios
-			.get("http://localhost:5000/products")
-			.then((e) => setProductsList(e.data.allproducts))
-			.catch((e) => console.log(e));
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-	console.log(productsList)
-	function HandlePurchase() {
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/products")
+      .then((e) => setProductsList(e.data.allproducts))
+      .catch((e) => console.log(e));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function HandlePurchase() {
+    if (!user) {
+      navigate("/login");
+    } else {
     const config = {
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -30,15 +33,13 @@ export default function PurchaseSelection() {
     const purchase = {
       product: currentProduct,
       quantity: counter,
-      user,
     };
-    console.log(config);
-    console.log(purchase);
     axios
-      .post("http://localhost:5000/cart", config, purchase)
+      .post("http://localhost:5000/cart", purchase, config)
       .then(() => navigate("/"))
       .catch((e) => console.log(e));
   }
+}
 
   useEffect(() => {
     const aux = currentProduct?.price.replace("$", "").replace("/kg", "");
@@ -66,7 +67,10 @@ export default function PurchaseSelection() {
           </div>
         </QuantityDiv>
         <PurchaseDiv>
-          <div style={{ cursor: "pointer" }} onClick={() => HandlePurchase(currentProduct)}>
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => HandlePurchase()}
+          >
             <p> Add to Cart </p>
             <p> {counter === 0 ? currentProduct?.price : `$${price}`} </p>
           </div>

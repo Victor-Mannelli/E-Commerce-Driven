@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import axios from "axios";
@@ -10,8 +10,15 @@ export default function LoginPage(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
   
-    const { setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
+
+    useEffect(() => {
+      if (user) {
+        navigate("/");
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
   
     async function handleSubmit(e) {
       e.preventDefault();
