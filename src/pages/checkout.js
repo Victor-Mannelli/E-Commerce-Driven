@@ -32,7 +32,8 @@ export default function CheckoutPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  function sendPayment() {
+  function sendPayment(total) {
+    console.log(total)
     if (!user) {
       navigate("/login");
     } else {
@@ -41,14 +42,13 @@ export default function CheckoutPage() {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      console.log(config)
       const body = {
         userInfo: {
           personalInfo: {
             name: form.name,
             email: form.email,
           },
-          addressInfo: {
+          shippingInfo: {
             country: form.country,
             zipcode: form.zipcode,
             address: form.address,
@@ -62,9 +62,9 @@ export default function CheckoutPage() {
             cardSecurityCode: form.cardSecurityCode,
           },
         },
+        orderTotal: total,
         orderItems: [...cart],
       };
-      console.log(body)
       axios
         .post("http://localhost:5000/orders", body, config)
         .then(() => {
