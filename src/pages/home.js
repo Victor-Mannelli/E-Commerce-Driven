@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
-import { PageDefaultStyle, StyledInput } from "../GeneralStyles";
+import { PageDefaultStyle, SearchBar, SearchIcon, StyledInput } from "../GeneralStyles";
 import Product from "../Product.js";
 import Header from "../components/Header";
 import loading from "../assets/loading.gif";
+import MobileHeader from "../components/MobileHeader";
 
 export default function HomePage() {
 	const [productsList, setProductsList] = useState([]);
@@ -25,6 +25,7 @@ export default function HomePage() {
 	) : (
 		<PageDefaultStyle>
 			<Header />
+			<MobileHeader />
 			<SearchBar>
 				<StyledInput
 					placeholder="Search for an Item"
@@ -57,68 +58,11 @@ export default function HomePage() {
 					</div>
 				)}
 				<div>
-					<Title>
-						<h1> Meats </h1>
+					<Title> 
+						<h1> All Products</h1>
 					</Title>
 					<EspecificProducts>
-						{productsList?.meat.map((e) => {
-							return (
-								<Product
-									key={e._id}
-									name={e.name}
-									price={e.price}
-									quantity={e.stock}
-									image={e.image}
-									productId={e._id}
-								/>
-							);
-						})}
-					</EspecificProducts>
-				</div>
-				<div>
-					<Title>
-						<h1> Beverages </h1>
-					</Title>
-					<EspecificProducts>
-						{productsList?.beverage.map((e) => {
-							return (
-								<Product
-									key={e._id}
-									name={e.name}
-									price={e.price}
-									quantity={e.stock}
-									image={e.image}
-									productId={e._id}
-								/>
-							);
-						})}
-					</EspecificProducts>
-				</div>
-				<div>
-					<Title>
-						<h1> Grains </h1>
-					</Title>
-					<EspecificProducts>
-						{productsList?.grains.map((e) => {
-							return (
-								<Product
-									key={e._id}
-									name={e.name}
-									price={e.price}
-									quantity={e.stock}
-									image={e.image}
-									productId={e._id}
-								/>
-							);
-						})}
-					</EspecificProducts>
-				</div>
-				<div>
-					<Title>
-						<h1> Desserts </h1>
-					</Title>
-					<EspecificProducts>
-						{productsList?.dessert.map((e) => {
+						{productsList?.allproducts?.map((e) => {
 							return (
 								<Product
 									key={e._id}
@@ -136,23 +80,14 @@ export default function HomePage() {
 		</PageDefaultStyle>
 	);
 }
-const SearchBar = styled.div`
-	padding: 20px 0;
-	margin: 0 auto;
-	width: 340px;
-	position: relative;
-`;
-const SearchIcon = styled(HiOutlineMagnifyingGlass)`
-	position: absolute;
-	top: 28px;
-	right: 7px;
-	width: 25px;
-	height: 25px;
-`;
 const Products = styled.div`
+	width: 80%;
 	display: grid;
 	grid-template-rows: auto auto auto;
 	padding-bottom: 25px;
+	@media (max-width: 993px) {
+		width: 95%;
+	}
 `;
 const EspecificProducts = styled.div`
 	display: grid;
@@ -163,8 +98,8 @@ const EspecificProducts = styled.div`
 const Title = styled.div`
 	display: flex;
 	justify-content: center;
-	padding: 35px 0;
-	color: var(--darkmodeText);
+	padding: 15px;
+	color: black;
 	font-family: "Roboto", sans-serif;
 	font-size: 20px;
 `;
@@ -178,7 +113,7 @@ const LoadingPage = styled.div`
 	background-color: var(--darkmode);
 	cursor: default;
 	img {
-		width: 150px;
-		height: 150px;
+		width: 100px;
+		height: 100px;
 	}
 `;

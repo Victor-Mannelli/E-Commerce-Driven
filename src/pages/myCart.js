@@ -1,93 +1,108 @@
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useContext, useEffect } from "react";
+import { HiOutlineXMark } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import CartSummary from "../components/CartSummary";
 import Header from "../components/Header";
-import { PageDefaultStyle, StyledButton } from "../GeneralStyles";
+import CartContext from "../contexts/CartContext";
+import CartStatusContext from "../contexts/CartStatusContext";
+import UserContext from "../contexts/UserContext";
+import { PageDefaultStyle } from "../GeneralStyles";
 
 export default function MyCartPage() {
+  const { user } = useContext(UserContext);
+  const { cart, setCart } = useContext(CartContext);
+  const { setNumberOfProducts} = useContext(CartStatusContext)
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    } else {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      axios
+        .get("http://localhost:5000/cart", config)
+        .then((res) => {
+          const newCart = [...res.data];
+          setCart(newCart);
+          setNumberOfProducts(newCart.lenght)
+        })
+        .catch((err) => console.log(err));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  function deleteProduct(productId) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+      data: {
+        productId: productId,
+      },
+    };
+    axios
+      .delete("http://localhost:5000/cart", config)
+      .then((res) => setCart(res.data))
+      .catch((err) => console.log(err));
+  }
+
+  function listProductsInCart({
+    productId,
+    productName,
+    productImage,
+    productPrice,
+    quantity,
+  }) {
+
+    return (
+      <div className="product-container" key={productId}>
+        <img src={productImage} alt="product in cart" />
+        <div className="info">
+          <h2>{productName}</h2>
+          <p>{`Quantity: ${quantity}`}</p>
+          <p>{productPrice}</p>
+        </div>
+        <div className="buttons">
+          <button onClick={() => deleteProduct(productId)}>
+            <HiOutlineXMark />
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <PageDefaultStyle>
       <Header />
-      <StyledCartSummary>
-        <h1>Order summary</h1>
-        <div>
-          <span>Subtotal</span>
-          <span>Value 1</span>
-        </div>
-        <div>
-          <span>(-) Discounts</span>
-          <span>Value 2</span>
-        </div>
-        <div>
-          <span>(+) Freight</span>
-          <span>Value 3</span>
-        </div>
-        <div>
-          <span>Total</span>
-          <span>Value 4</span>
-        </div>
-        <StyledButton>Checkout now</StyledButton>
-        <Link to="/">Back to shopping</Link>
-      </StyledCartSummary>
       <StyledProductsInCart>
         <h1>My Cart</h1>
-        <div className="product-container">
-          <img src="#" alt="product in cart" />
-          <div className="info">
-            <h2>Name</h2>
-            <span>Description</span>
-          </div>
-          <div className="buttons">
-            <button>Edit</button>
-            <button>Remove</button>
-          </div>
-        </div>
-        <div className="product-container">
-          <img src="#" alt="product in cart" />
-          <div className="info">
-            <h2>Name</h2>
-            <span>Description</span>
-          </div>
-          <div className="buttons">
-            <button>Edit</button>
-            <button>Remove</button>
-          </div>
-        </div>
-        <div className="product-container">
-          <img src="#" alt="product in cart" />
-          <div className="info">
-            <h2>Name</h2>
-            <span>Description</span>
-          </div>
-          <div className="buttons">
-            <button>Edit</button>
-            <button>Remove</button>
-          </div>
-        </div>
-        <div className="product-container">
-          <img src="#" alt="product in cart" />
-          <div className="info">
-            <h2>Name</h2>
-            <span>Description</span>
-          </div>
-          <div className="buttons">
-            <button>Edit</button>
-            <button>Remove</button>
-          </div>
-        </div>
+        {cart ? (
+          cart?.map((product) => listProductsInCart(product))
+        ) : (
+          <h3>Your cart is empty.</h3>
+        )}
       </StyledProductsInCart>
+      <CartSummary goTo="Checkout" backTo="shopping" />
     </PageDefaultStyle>
   );
 }
 
 const StyledProductsInCart = styled.div`
   padding: 30px;
+  padding-right: 380px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   height: 100%;
-  width: calc(100% - 350px);
+  width: 100%;
   font-family: "Roboto", sans-serif;
-  gap: 25px;
+  gap: 15px;
   h1 {
     align-self: flex-start;
     font-size: 30px;
@@ -95,27 +110,35 @@ const StyledProductsInCart = styled.div`
     margin-bottom: 10px;
     color: whitesmoke;
   }
+  h3 {
+    align-self: flex-start;
+  }
   .product-container {
-    background-color: lightgray;
-    padding: 30px 18px;
+    background-color: white;
     width: 100%;
     height: 120px;
     display: flex;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 15px;
     border: none;
   }
   img {
-    height: 100%;
+    max-height: 100%;
+    min-width: 140px;
+    padding: 20px 18px;
   }
   .info {
     width: 100%;
+    padding: 30px 18px;
     h2 {
-      font-size: 20px;
       font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 5px;
     }
-    span {
+    p {
+      color: gray;
       font-size: 15px;
+      line-height: 20px;
     }
   }
   .buttons {
@@ -125,41 +148,17 @@ const StyledProductsInCart = styled.div`
     justify-content: space-between;
     gap: 10px;
     height: 100%;
-    margin-right: 30px;
     button {
+      background-color: black;
       width: 70px;
       height: 100%;
-      border-radius: 5px;
+      border-radius: 0 15px 15px 0;
       border: none;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 45px;
     }
   }
 `;
-const StyledCartSummary = styled.div`
-  margin-top: 70px;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 350px;
-  background-color: whitesmoke;
-  font-family: "Roboto", sans-serif;
-  gap: 25px;
-  h1 {
-    align-self: flex-start;
-    font-size: 30px;
-    font-weight: 700;
-    margin-bottom: 10px;
-  }
-  div {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-  button {
-    margin-bottom: -10px;
-  }
-`;
+
