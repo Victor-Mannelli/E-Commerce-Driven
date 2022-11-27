@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import backgroundImage from "./assets/background.png";
 import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
-import backgroundImage from "./assets/background.png";
-import { HiOutlineMagnifyingGlass } from "react-icons/hi2";
 
 export const PageDefaultStyle = styled.div`
 	display: flex;
@@ -137,36 +135,6 @@ export const StyledButton = styled.button`
 	:hover {
 		background-color: gray;
 	}
-`;
-export const LoadingPage = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding-top: 70px;
-	width: 100%;
-	min-height: 100vh;
-	background-image: url(${backgroundImage});
-	cursor: default;
-	img {
-		width: 100px;
-		height: 100px;
-	}
-`;
-export const SearchBar = styled.div`
-	position: relative;
-	padding: 20px 0;
-	margin: 0 auto;
-	width: 340px;
-	@media (max-width: 560px) {
-		width: 80%;
-	}
-`;
-export const SearchIcon = styled(HiOutlineMagnifyingGlass)`
-	position: absolute;
-	top: 28px;
-	right: 7px;
-	width: 25px;
-	height: 25px;
 `;
 export const LoadingPage = styled.div`
 	display: flex;
