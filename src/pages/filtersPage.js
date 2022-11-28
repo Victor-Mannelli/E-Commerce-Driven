@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import Product from "../Product.js";
+import Product from "../components/Product";
 import {
 	LoadingPage,
 	PageDefaultStyle,

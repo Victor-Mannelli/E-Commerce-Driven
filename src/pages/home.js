@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { PageDefaultStyle, SearchBar, SearchIcon, StyledInput } from "../GeneralStyles";
-import Product from "../Product.js";
+import Product from "../components/Product";
 import Header from "../components/Header";
 import loading from "../assets/loading.gif";
 import MobileHeader from "../components/MobileHeader";
