@@ -13,8 +13,7 @@ export default function HomePage() {
 
 	useEffect(() => {
 		axios
-			// .get("https://sundaymarket-api.onrender.com/products")
-			.get("http://localhost:5000/products")
+			.get("https://sundaymarket-api.onrender.com/products")
 			.then((e) => setProductsList(e.data))
 			.catch((e) => console.log(e));
 	}, []);

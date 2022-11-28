@@ -24,7 +24,7 @@ export default function ProductInCart({
 			},
 		};
 		axios
-			.delete("http://localhost:5000/cart", config)
+			.delete("https://sundaymarket-api.onrender.com/cart", config)
 			.then((res) => setCart(res.data))
 			.catch((err) => console.log(err));
 	}

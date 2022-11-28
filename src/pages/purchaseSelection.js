@@ -15,7 +15,7 @@ export default function PurchaseSelection() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/products")
+      .get("https://sundaymarket-api.onrender.com/products")
       .then((e) => setProductsList(e.data.allproducts))
       .catch((e) => console.log(e));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,7 +35,7 @@ export default function PurchaseSelection() {
       quantity: counter,
     };
     axios
-      .post("http://localhost:5000/cart", purchase, config)
+      .post("https://sundaymarket-api.onrender.com/cart", purchase, config)
       .then(() => navigate("/"))
       .catch((e) => console.log(e));
   }

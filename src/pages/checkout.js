@@ -15,7 +15,6 @@ export default function CheckoutPage() {
 	const navigate = useNavigate();
 	const { user } = useContext(UserContext);
 	const { cart, setCart } = useContext(CartContext);
-
 	const [subtotal, setSubtotal] = useState(0);
 	const [discounts, setDiscounts] = useState(0); // TBD, no discounts for now
 	const [freight, setFreight] = useState(0); // TBD, no freight for now
@@ -84,10 +83,10 @@ export default function CheckoutPage() {
 				orderItems: {...cart},
 			};
 			axios
-				.post("http://localhost:5000/orders", body, config)
+				.post("https://sundaymarket-api.onrender.com/orders", body, config)
 				.then(() => {
 					toast.success("Order created!");
-					// clearCart();
+					clearCart();
 				})
 				.catch((err) => {
 					toast.error(`Something went wrong.\n${err.response.data[0]}`);
@@ -103,7 +102,7 @@ export default function CheckoutPage() {
 			},
 		};
 		axios
-			.delete("http://localhost:5000/orders", config)
+			.delete("https://sundaymarket-api.onrender.com/orders", config)
 			.then((res) => {
 				setTimeout(() => navigate("/"), 3000);
 				setCart([]);
