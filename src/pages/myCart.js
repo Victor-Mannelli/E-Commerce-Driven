@@ -2,13 +2,13 @@ import axios from "axios";
 import { useContext, useEffect } from "react";
 import { HiOutlineXMark } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import { PageDefaultStyle } from "../GeneralStyles";
 import styled from "styled-components";
 import CartSummary from "../components/CartSummary";
 import Header from "../components/Header";
 import CartContext from "../contexts/CartContext";
 import CartStatusContext from "../contexts/CartStatusContext";
 import UserContext from "../contexts/UserContext";
-import { PageDefaultStyle } from "../GeneralStyles";
 
 export default function MyCartPage() {
   const { user } = useContext(UserContext);

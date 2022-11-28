@@ -23,10 +23,9 @@ export default function FiltersPage() {
 	useEffect(() => {
 		axios
 			.get("http://localhost:5000/products")
-			.then((e) => setProductsList(e.data.allproducts))
+			.then((e) => setProductsList(e.data))
 			.catch((e) => console.log(e));
 	}, []);
-
 	return productsList.length === 0 ? (
 		<LoadingPage>
 			<Header />
@@ -72,7 +71,7 @@ export default function FiltersPage() {
 						<h1> All Products</h1>
 					</Title>
 					<EspecificProducts>
-						{filteredList.map((e) => {
+						{filteredList?.map((e) => {
 							return (
 								<Product
 									key={e._id}
