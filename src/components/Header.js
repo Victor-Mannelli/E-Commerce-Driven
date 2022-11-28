@@ -1,14 +1,32 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AiOutlineShoppingCart, AiOutlineUser } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import CartContext from "../contexts/CartContext";
+import axios from "axios";
 
 export default function Header() {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
-  const { cart } = useContext(CartContext);
+  const { cart, setCart } = useContext(CartContext);
+
+  useEffect(() => {
+		if (!user) {
+			navigate("/login");
+		} else {
+			const config = {
+				headers: {
+					Authorization: `Bearer ${user.token}`,
+				},
+			};
+			axios
+				.get("http://localhost:5000/cart", config)
+				.then((res) => setCart([...res.data]))
+				.catch((err) => console.log(err));
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
 
   return (
     <HeaderStyle>
@@ -26,7 +44,7 @@ export default function Header() {
         </div>
         <div onClick={() => navigate("/cart")} className="user-features-icons">
           <AiOutlineShoppingCart />
-          <span>{`(${cart.length})`}</span>
+          <span>{`(${cart?.length})`}</span>
         </div>
       </UserFeatures>
     </HeaderStyle>
