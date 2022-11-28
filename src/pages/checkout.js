@@ -73,7 +73,7 @@ export default function CheckoutPage() {
         })
         .catch((err) => {
           toast.error(
-            "Something went wrong and we couldn't create your order."
+            `Something went wrong.\n${err.response.data}`
           );
           console.log(err);
         });
@@ -165,7 +165,7 @@ export default function CheckoutPage() {
         <div>
           <h2>Payment info</h2>
           <StyledRegistrationInput
-            type="number"
+            type="text"
             name="creditCardNumber"
             onChange={handleForm}
             value={form.creditCardNumber}
