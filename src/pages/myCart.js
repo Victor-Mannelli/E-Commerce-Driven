@@ -7,13 +7,12 @@ import styled from "styled-components";
 import CartSummary from "../components/CartSummary";
 import Header from "../components/Header";
 import CartContext from "../contexts/CartContext";
-import CartStatusContext from "../contexts/CartStatusContext";
 import UserContext from "../contexts/UserContext";
+import MobileHeader from "../components/MobileHeader";
 
 export default function MyCartPage() {
   const { user } = useContext(UserContext);
   const { cart, setCart } = useContext(CartContext);
-  const { setNumberOfProducts} = useContext(CartStatusContext)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,7 +29,6 @@ export default function MyCartPage() {
         .then((res) => {
           const newCart = [...res.data];
           setCart(newCart);
-          setNumberOfProducts(newCart.lenght)
         })
         .catch((err) => console.log(err));
     }
@@ -80,6 +78,7 @@ export default function MyCartPage() {
   return (
     <PageDefaultStyle>
       <Header />
+      <MobileHeader/>
       <StyledProductsInCart>
         <h1>My Cart</h1>
         {cart ? (
@@ -103,6 +102,10 @@ const StyledProductsInCart = styled.div`
   width: 100%;
   font-family: "Roboto", sans-serif;
   gap: 15px;
+  @media (max-width: 993px) {
+    padding-bottom: 250px;
+    padding-right: 30px;
+  }
   h1 {
     align-self: flex-start;
     font-size: 30px;
@@ -112,6 +115,7 @@ const StyledProductsInCart = styled.div`
   }
   h3 {
     align-self: flex-start;
+    font-size: 18px;
   }
   .product-container {
     background-color: white;
@@ -121,6 +125,7 @@ const StyledProductsInCart = styled.div`
     align-items: center;
     border-radius: 15px;
     border: none;
+    overflow: hidden;
   }
   img {
     max-height: 100%;

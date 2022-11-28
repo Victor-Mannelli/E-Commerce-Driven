@@ -36,15 +36,15 @@ export default function CartSummary({ goTo, backTo, sendPayment }) {
   return (
     <StyledCartSummary>
       <h1>Order summary</h1>
-      <div>
+      <div className="mobile-hidden">
         <span>Subtotal</span>
         <span>{"$" + subtotal.toFixed(2)}</span>
       </div>
-      <div>
+      <div className="mobile-hidden">
         <span>(-) Discounts</span>
         <span>{"$" + discounts.toFixed(2)}</span>
       </div>
-      <div>
+      <div className="mobile-hidden">
         <span>(+) Freight</span>
         <span>{"$" + freight.toFixed(2)}</span>
       </div>
@@ -55,14 +55,14 @@ export default function CartSummary({ goTo, backTo, sendPayment }) {
       <StyledButton
         onClick={() => handleCheckoutAndPayment()}
       >{`${goTo} now`}</StyledButton>
-      <Link to={backTo==="cart" ? "/cart" : "/"}>{`Back to ${backTo}`}</Link>
+      <Link to={backTo === "cart" ? "/cart" : "/"}>{`Back to ${backTo}`}</Link>
     </StyledCartSummary>
   );
 }
 
 const StyledCartSummary = styled.div`
-  margin-top: 70px;
   padding: 30px;
+  padding-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,6 +74,16 @@ const StyledCartSummary = styled.div`
   background-color: whitesmoke;
   font-family: "Roboto", sans-serif;
   gap: 25px;
+  box-shadow: rgba(0, 0, 0, 0.1) -10px -10px 15px -3px;
+  @media (max-width: 993px) {
+    margin-top: 0;
+    padding-top: 20px;
+    top: auto;
+    bottom: 0;
+    height: 250px;
+    width: 100%;
+    gap: 10px;
+  }
   h1 {
     align-self: flex-start;
     font-size: 30px;
@@ -87,5 +97,8 @@ const StyledCartSummary = styled.div`
   }
   button {
     margin-bottom: -10px;
+    @media (max-width: 993px) {
+      margin-bottom: 0;
+    }
   }
 `;

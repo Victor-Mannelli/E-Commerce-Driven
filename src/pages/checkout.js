@@ -9,10 +9,11 @@ import UserContext from "../contexts/UserContext";
 import { PageDefaultStyle, StyledRegistrationInput } from "../GeneralStyles";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MobileHeader from "../components/MobileHeader";
 
 export default function CheckoutPage() {
   const { user } = useContext(UserContext);
-  const { cart } = useContext(CartContext);
+  const { cart, setCart } = useContext(CartContext);
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
@@ -33,7 +34,6 @@ export default function CheckoutPage() {
   }
 
   function sendPayment(total) {
-    console.log(total)
     if (!user) {
       navigate("/login");
     } else {
@@ -69,7 +69,7 @@ export default function CheckoutPage() {
         .post("http://localhost:5000/orders", body, config)
         .then(() => {
           toast.success("Order created!");
-          clearCart()
+          clearCart();
         })
         .catch((err) => {
           toast.error(
@@ -88,13 +88,17 @@ export default function CheckoutPage() {
     };
     axios
       .delete("http://localhost:5000/orders", config)
-      .then((res) => console.log(res))
+      .then((res) => {
+        setTimeout(() => navigate("/"), 3000);
+        setCart([]);
+      })
       .catch((err) => console.log(err));
   }
 
   return (
     <PageDefaultStyle>
       <Header />
+      <MobileHeader/>
       <StyledCheckoutForm>
         <h1>Checkout</h1>
         <div>
@@ -196,7 +200,7 @@ export default function CheckoutPage() {
       <CartSummary goTo="Order" backTo="cart" sendPayment={sendPayment} />
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
@@ -220,6 +224,10 @@ const StyledCheckoutForm = styled.form`
   width: 100%;
   font-family: "Roboto", sans-serif;
   gap: 12px;
+  @media (max-width: 993px) {
+    padding-bottom: 250px;
+    padding-right: 30px;
+  }
   div {
     width: 100%;
   }

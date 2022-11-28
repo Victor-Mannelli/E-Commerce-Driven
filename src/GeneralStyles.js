@@ -11,35 +11,13 @@ export const PageDefaultStyle = styled.div`
 	min-height: 100vh;
 	background-image: url(${backgroundImage});
 	background-size: auto;
+	background-attachment: fixed;
 	cursor: default;
 	@media (max-width: 993px) {
-		padding-top: 0;
-	}
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding-top: 70px;
-	width: 100%;
-	min-height: 100vh;
-	background-image: url(${backgroundImage});
-	background-size: auto;
-	cursor: default;
-	@media (max-width: 993px) {
-		padding-top: 0;
+		padding-top: 50px;
 	}
 `;
 export const StyledInput = styled.input`
-	width: 340px;
-	height: 40px;
-	border-radius: 5px;
-	border: none;
-	outline: none;
-	padding: 0 37px 0 15px;
-	font-family: "Roboto", sans-serif;
-	font-size: 17px;
-	@media (max-width: 560px) {
-		width: 100%;
-	}
 	width: 340px;
 	height: 40px;
 	border-radius: 5px;
@@ -93,35 +71,8 @@ export const StyledRegistrationInput = styled.input`
 	&::placeholder {
 		color: #868686;
 	}
-	background: white;
-	border: none;
-	border-radius: 5px;
-	height: 45px;
-	width: 100%;
-	margin-bottom: 8px;
-	padding: 0 15px;
-	font-size: 18px;
-	display: flex;
-	align-items: center;
-	color: black;
-	&::placeholder {
-		color: #868686;
-	}
 `;
 export const StyledButton = styled.button`
-	width: 100%;
-	height: 46px;
-	margin-top: 10px;
-	background: #262a2b;
-	border-radius: 5px;
-	border: none;
-	color: white;
-	font-weight: 700;
-	font-size: 20px;
-	cursor: pointer;
-	:hover {
-		background-color: gray;
-	}
 	width: 100%;
 	height: 46px;
 	margin-top: 10px;
