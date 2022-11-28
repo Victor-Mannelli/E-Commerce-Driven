@@ -17,6 +17,7 @@ export default function HomePage() {
 			.then((e) => setProductsList(e.data))
 			.catch((e) => console.log(e));
 	}, []);
+	
 	return productsList.length === 0 ? (
 		<LoadingPage>
 			<Header />

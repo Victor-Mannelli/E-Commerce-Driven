@@ -12,16 +12,17 @@ export default function Header() {
 	const { cart, setCart } = useContext(CartContext);
 
 	useEffect(() => {
-		const config = {
-			headers: {
-				Authorization: `Bearer ${user.token}`,
-			},
-		};
-		axios
-			.get("https://sundaymarket-api.onrender.com/cart", config)
-			.then((res) => setCart([...res.data]))
-			.catch((err) => console.log(err));
-
+		if (user) {
+			const config = {
+				headers: {
+					Authorization: `Bearer ${user.token}`,
+				},
+			};
+			axios
+				.get("https://sundaymarket-api.onrender.com/cart", config)
+				.then((res) => setCart([...res.data]))
+				.catch((err) => console.log(err));
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 
